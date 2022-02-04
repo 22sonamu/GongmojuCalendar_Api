@@ -8,8 +8,9 @@ public class JusikProfile {
 	private String HopePrice;
 	private String Companys;
 	private String SetPrice;
+	private String DetailUrl;
 	public JusikProfile(String name, String chungYakDay, String refundDay, String sangJangDay, String hopePrice,
-			String companys, String setPrice) {
+			String companys, String setPrice, String detailUrl) {
 		super();
 		this.name = name;
 		ChungYakDay = chungYakDay;
@@ -18,6 +19,7 @@ public class JusikProfile {
 		HopePrice = hopePrice;
 		Companys = companys;
 		SetPrice = setPrice;
+		DetailUrl = detailUrl;
 	}
 	public String getName() {
 		return name;
@@ -60,6 +62,12 @@ public class JusikProfile {
 	}
 	public void setSetPrice(String setPrice) {
 		SetPrice = setPrice;
+	}
+	public String getDetailUrl() {
+		return DetailUrl;
+	}
+	public void setDetailUrl(String detailUrl) {
+		DetailUrl = detailUrl;
 	}
 	
 	
