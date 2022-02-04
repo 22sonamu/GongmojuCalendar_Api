@@ -38,23 +38,35 @@ public class JusikProfileController {
 
 	@Service
 	public class JscoupComponent {
+        List<String> names = new ArrayList<String>(); //주식이름 
+        List<String> ChungYakDay = new ArrayList<String>();//청약일 
+        List<String> SetPrice = new ArrayList<String>();//확정공모가 
+        List<String> HopePrice = new ArrayList<String>();//희망공모가 
+        List<String> Companys = new ArrayList<String>();//증권사
+        List<String> RefundDay = new ArrayList<String>();//환불일.
+        List<String> SangJangDay = new ArrayList<String>();//상장일.
+        List<String> DetailUrl = new ArrayList<String>();//세부정보 url
 		
 		private String URL_38_1 = "http://www.38.co.kr/html/fund/?o=k";
 		private String URL_38_2 = "http://www.38.co.kr/html/fund/index.htm?o=k&page=2";
 		
 
 		@PostConstruct //앱 실행시 바로 시작될 수 있도록 함  
-		public void getKoreaCovidDatas() throws IOException {
-	        List<String> names = new ArrayList<String>(); //주식이름 
-	        List<String> ChungYakDay = new ArrayList<String>();//청약일 
-	        List<String> SetPrice = new ArrayList<String>();//확정공모가 
-	        List<String> HopePrice = new ArrayList<String>();//희망공모가 
-	        List<String> Companys = new ArrayList<String>();//증권사
-	        List<String> RefundDay = new ArrayList<String>();//환불일.
-	        List<String> SangJangDay = new ArrayList<String>();//상장일.
-	        List<String> DetailUrl = new ArrayList<String>();//상장일.
+		public void parse() throws IOException {
 
-	        org.jsoup.nodes.Document doc = Jsoup.connect(URL_38_1).get();
+			getKoreaCovidDatas(URL_38_1);
+			getKoreaCovidDatas(URL_38_2);
+			jusikMap = new HashMap<String, JusikProfile>();
+			for(int i = 0 ;i < ChungYakDay.size(); i++)
+				jusikMap.put(names.get(i), new JusikProfile(names.get(i), ChungYakDay.get(i), RefundDay.get(i),SangJangDay.get(i), HopePrice.get(i),Companys.get(i), SetPrice.get(i), DetailUrl.get(i)));
+		}
+		
+		
+		
+		public void getKoreaCovidDatas(String URL) throws IOException {
+
+	       
+	        org.jsoup.nodes.Document doc = Jsoup.connect(URL).get();
 	        
 	        org.jsoup.select.Elements contents = doc.select("table[summary=\"공모주 청약일정\"]");
 	        
@@ -134,11 +146,9 @@ public class JusikProfileController {
 	        }
 	        
 	        
-			jusikMap = new HashMap<String, JusikProfile>();
-			for(int i = 0 ;i < ChungYakDay.size(); i++)
-				jusikMap.put(names.get(i), new JusikProfile(names.get(i), ChungYakDay.get(i), RefundDay.get(i),SangJangDay.get(i), HopePrice.get(i),Companys.get(i), SetPrice.get(i), DetailUrl.get(i)));
 			
 	  }
+
 		
 	}
 }
