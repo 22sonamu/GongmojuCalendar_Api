@@ -95,6 +95,7 @@ public class JusikProfileController {
 	        
 	        
 	        String contents_ChungYakDay = contents.select("tbody tr td").text();
+	        
 	        	        
 	        String contents_forurl = contents.select("tbody tr td a").toString();
 	        
@@ -141,10 +142,21 @@ public class JusikProfileController {
 	        String a = contents_name.text();
 	        
 	        String[] array = a.split(" "); //주식 이름 array 
+	        String[] for_company = contents_ChungYakDay.split(", ");
+	        String aa = "";
+	        for(int i = 0 ; i < for_company.length ; i++) {
+	        	aa += for_company[i];
+	        }
 	        
-	        String[] no_names = contents_ChungYakDay.split(" "); //이름 제외한것들 array 
+	        String[] no_names = aa.split(" "); //이름 제외한것들 array 
 	        
 	        
+	        
+	        
+	        for(int i = 0 ; i < no_names.length; i ++) {
+	        	System.out.print(i);
+	        	System.out.println("   " + no_names[i]);
+	        }
 	        
 	        for(int i = 0 ; i < array.length ; i++) {
 	        	if(! array[i].equals("(유가)")) //주식 이름 중 유가라고 붙어있는것remove
